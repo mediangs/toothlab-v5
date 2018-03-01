@@ -1,0 +1,70 @@
+#x3d-container{
+  position:relative;
+  display:block;
+  align-content: center;
+  line-height:0px;
+  border: none;
+}
+
+.x3d-unzoom {
+  width: 95%;
+  height: 400px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.x3d-zoom {
+  width: 95%;
+  height: 600px;
+  padding: 10px;
+  margin: 10px;
+}
+
+#tab-group{
+  /*
+  position: absolute;
+  float: right;
+  */
+  top:2px;
+  right: 3px;
+  font-size: 12px;
+}
+
+#x3d-list{
+  list-style-type: none;
+}
+
+#section-slider{
+  position: absolute;
+  float: left;
+  top: 70px;
+  left: 0px;
+
+}
+
+.mat-slider-vertical {
+  height: 300px;
+}
+
+#tools {
+  top:0;
+  left:0;
+  margin:0px;
+  padding:0px;
+  position:absolute;
+  display:inline;
+  z-index:100;
+}
+
+#tools li{
+  line-height:0px;
+  list-style-type:none;
+  display:inline;
+  padding:0;
+  margin:0 -2px 0 0;
+  float:left;
+}
+#tools li span{
+  padding-right: 1.4em;
+}
+

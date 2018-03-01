@@ -1,0 +1,9 @@
+#config-list{
+  bottom:2px;
+  right: 10px;
+}
+
+button.selected {
+  color: indigo;
+  font-weight: bold;
+}

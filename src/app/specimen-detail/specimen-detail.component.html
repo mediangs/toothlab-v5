@@ -1,0 +1,131 @@
+<!--view-source:http://x3dom.org/x3dom/example/x3dom_x3dElementCSSIntegration.html -->
+<div id="main">
+  <mat-card *ngIf="!zoomed" id="title">
+    <mat-card-header>
+      <mat-card-title>{{specimen.title}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngIf="isSectionDataLoaded">
+        {{specimen.location}}<br>
+        {{specimen.description}}<br>
+      </div>
+      <div *ngIf="!isSectionDataLoaded">
+        <h3>Loading data...</h3>
+        <mat-progress-spinner
+          color="primary"
+          mode="indeterminate">
+        </mat-progress-spinner>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" align="end" opened="false" class="mat-sidenav">
+      <mat-tab-group *ngIf="!zoomed" dynamicHeight="true" id="tab-group">
+        <mat-tab label="3D Models">
+          <ul id="x3d-list">
+            <li *ngFor="let x3d of specimen.x3dModels">
+              <mat-checkbox
+                class="items"
+                color="primary"
+                [(ngModel)]="x3d.visible">
+                <i class="material-icons"
+                   style="vertical-align: middle;"
+                   [style.color]="x3d.color">lens</i>
+                {{x3d.description}}
+              </mat-checkbox>
+            </li>
+          </ul>
+        </mat-tab>
+        <mat-tab label="Sections">
+          <app-view-config
+            *ngIf="!zoomed && isSectionDataLoaded && cmpKeys"
+            [cmpKeys]="cmpKeys">
+          </app-view-config>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-sidenav>
+
+    <div>
+      <x3d id="x3d-container" showProgress='true' showStat='false' showLog='false'
+           [class.x3d-unzoom]="!zoomed" [class.x3d-zoom]="zoomed">
+        <ul id="tools">
+          <li>
+            <span id="zoom-button" (click)="toggleZoom()">
+              <mat-icon *ngIf="!zoomed" matTooltip="Zoom">zoom_out_map</mat-icon>
+              <mat-icon *ngIf="zoomed"  matTooltip="Unzoom" >zoom_out</mat-icon>
+            </span>
+          </li>
+          <li>
+            <span matTooltip="Show current section information"
+            (click)="sectionInfoDialog()" >
+            <mat-icon>info_outline</mat-icon>
+            </span>
+          </li>
+
+          <li>
+            <span matTooltip="Help" (click)="helpDialog()">
+              <mat-icon>help_outline</mat-icon>
+            </span>
+          </li>
+
+          <li *ngIf="!zoomed">
+            <span (click)="sidenav.toggle()">
+              <mat-icon *ngIf="sidenav.opened" matTooltip="Hide Model display configuration">last_page</mat-icon>
+              <mat-icon *ngIf="!sidenav.opened" matTooltip="Open Model display configuration">more_vert</mat-icon>
+            </span>
+          </li>
+
+        </ul>
+
+
+        <div id="section-slider">
+          <mat-slider #sliderValue
+                      vertical="true"
+                      [(ngModel)]="selectedSection"
+                      [disabled] = "!isSectionDataLoaded"
+                      [max]="sliderAttr['max']"
+                      [min]="sliderAttr['min']"
+                      [step]="sliderAttr['step']"
+                      [thumb-label]="true"
+                      (input)="dataService.setActiveSection(sliderValue.value)"
+          ></mat-slider>
+          {{selectedSection | number:'.1'}}mm
+        </div>
+
+        <scene pickMode="texCoord">
+          <Viewpoint position="-20.96177 -3.05639 1.59837" orientation="-0.50839 -0.58356 0.63325 2.14580"
+                     zNear="0.24115" zFar="100.00000" description=""></Viewpoint>
+
+          <Transform translation="-4 -6 -8">
+            <Group *ngFor="let x3d of specimen.x3dModels">
+              <Inline *ngIf = "x3d.visible" [attr.nameSpaceName]='x3d.name' mapDEFToID="true"
+                      [attr.url]='specimen.path+x3d.name+".x3d"'></Inline>
+            </Group>
+            <Group *ngFor="let key of coordInfo | keys">
+              <shape>
+                <IndexedLineSet [attr.coordIndex]='coordInfo[key].coordIndex'>
+                  <Coordinate [attr.point]='coordInfo[key].coordPoints'></Coordinate>
+                  <Color [attr.color]='coordInfo[key].coordColor'></Color>
+                </IndexedLineSet>
+              </shape>
+            </Group>
+          </Transform>
+        </scene>
+      </x3d>
+    </div>
+
+  </mat-sidenav-container>
+</div>
+
+<br>
+<div *ngIf="!zoomed">
+  <app-specimen-chart [specimenId]="specimenId"></app-specimen-chart>
+</div>
+
+
+<!--div>
+  <button (click)="reload()">Reload</button>
+  <button (click)="gotoAnatomy()">Back</button>
+</div -->
+

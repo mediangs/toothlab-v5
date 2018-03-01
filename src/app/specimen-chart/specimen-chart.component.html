@@ -1,0 +1,17 @@
+<div align="center">
+  <mat-form-field>
+    <mat-select
+      placeholder="Select Chart"
+      class = "chart-select"
+      [(ngModel)]="selectedChartValue"
+      name="chart"
+      color="red"
+      (change) ="chartService.setActiveChart(selectedChartValue.id)">
+      <mat-option *ngFor="let chart of chartDefinitions" [value]="chart">
+        {{chart.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<nvd3 [options]="chartOptions" [data]="chartData"></nvd3>

@@ -1,0 +1,64 @@
+<ul id="config-list">
+
+  <mat-menu #mindist = "matMenu" [overlapTrigger]="false">
+    <button *ngFor="let item of menu_mindist.menuItems"
+            mat-menu-item
+            (click)="this.sectionContourService.setSectionContoursWithMultisections(item.key);
+            onSelecte('mindist', item.name)">
+      {{item.name}}
+    </button>
+  </mat-menu>
+
+  <button mat-icon-button
+          [class.selected]="selectedDirection && selectedDirection =='mindist'"
+          [matMenuTriggerFor]="mindist">
+    <mat-icon>more_vert</mat-icon>
+    <span>Thinnest dentin</span><span *ngIf="selectedDirection && selectedDirection =='mindist'"> : {{selectedKey}}</span>
+  </button>
+  <br>
+
+  <mat-menu  #mesial = "matMenu" [overlapTrigger]="false">
+    <button *ngFor="let item of menu_mesial.menuItems"
+            mat-menu-item
+            (click)="this.sectionContourService.setSectionContoursWithMultisections(item.key);
+            onSelecte('mesial', item.name)">
+      {{item.name}}
+    </button>
+  </mat-menu>
+
+  <button mat-icon-button
+          [class.selected]="selectedDirection && selectedDirection =='mesial'"
+          [matMenuTriggerFor]="mesial">
+    <mat-icon>more_vert</mat-icon>
+    <span>Mesial dentin</span><span *ngIf="selectedDirection && selectedDirection =='mesial'"> : {{selectedKey}}</span>
+  </button>
+  <br>
+
+  <mat-menu #distal = "matMenu" [overlapTrigger]="false">
+    <button *ngFor="let item of menu_distal.menuItems"
+            mat-menu-item
+            (click)="this.sectionContourService.setSectionContoursWithMultisections(item.key);
+            onSelecte('distal', item.name)">
+      {{item.name}}
+    </button>
+  </mat-menu>
+
+  <button mat-icon-button
+          [class.selected]="selectedDirection && selectedDirection =='distal'"
+          [matMenuTriggerFor]="distal">
+    <mat-icon>more_vert</mat-icon>
+    <span>Distal dentin</span><span *ngIf="selectedDirection && selectedDirection =='distal'"> : {{selectedKey}}</span>
+  </button>
+  <br>
+
+  <button mat-button
+          (click)="this.sectionContourService.setSectionContoursWithMultisections(''); onSelecte('', '')">
+    Reset
+  </button>
+
+
+  <button mat-button
+          (click)="viewConfigDialog()">
+    Fine tune
+  </button>
+</ul>

@@ -1,0 +1,13 @@
+md-select-value.md-select-placeholder {
+  color: red !important;
+  width: 100px;
+}
+
+md-select.md-select-placeholder{
+  color: red;
+}
+
+.chart-select {
+  width: 300px;
+  font-weight: bold;
+}

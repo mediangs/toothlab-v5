@@ -1,0 +1,37 @@
+<script src="../dialog-section-info/dialog-section-info.component.spec.ts"></script>
+<h1 mat-dialog-title>Configure display mode</h1>
+
+<div mat-dialog-content><br>
+  <i class="material-icons" style="color:blue;vertical-align: middle;">check_box</i> Visibility
+  <i class="material-icons" style="color:red;vertical-align: middle;">check_box</i> View entire sections
+  <ul id="options">
+    <li *ngFor = "let contour of data">
+
+      <i class="material-icons"
+         style="vertical-align: middle;"
+         [style.color]="contour.color"
+         [(colorPicker)]="contour.color"
+         [value]="contour.color"
+         [cpOutputFormat]="hex"
+         [cpPosition]="'right'"
+         [cpWidth]="'200px'"
+      >label</i>
+
+      <mat-checkbox
+        color="primary"
+        [(ngModel)]="contour.visible">
+      </mat-checkbox>
+
+      <mat-checkbox
+        color="accent"
+        [(ngModel)]="contour.multiSections">
+        {{contour.name.slice(contour.name.indexOf('.') + 1)}}
+      </mat-checkbox>
+    </li>
+  </ul>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="dialogRef.close(data)">Apply options</button>
+  <button mat-button (click)="dialogRef.close(previousData)">Cancel</button>
+</div>
